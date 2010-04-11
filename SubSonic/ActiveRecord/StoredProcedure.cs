@@ -321,7 +321,7 @@ namespace SubSonic
                 result = SqlQuery.BuildTypedResult<T>(rdr);
                 rdr.Close();
             }
-
+            OutputValues = Command.OutputValues;
             return result;
         }
 
