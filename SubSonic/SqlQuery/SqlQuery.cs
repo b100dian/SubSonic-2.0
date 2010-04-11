@@ -1516,7 +1516,7 @@ namespace SubSonic
                     result.Add(item);
                 }
             } //bferrier added this to get a list of values back if only selecting one column
-            else if(iType.IsValueType)
+            else if(iType.IsValueType || iType == typeof(string))
             {
                 while (rdr.Read())
                 {
