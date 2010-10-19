@@ -1498,7 +1498,7 @@ namespace SubSonic
             return null;
         }
 
-        internal static List<T> BuildTypedResult<T>(IDataReader rdr) where T : new()
+        public static List<T> BuildTypedResult<T>(IDataReader rdr) where T : new()
         {
             List<T> result = new List<T>();
             Type iType = typeof(T);
@@ -1618,6 +1618,7 @@ namespace SubSonic
             T result = default(T);
             using(IDataReader rdr = ExecuteReader())
             {
+                //TODO stop reading all data
                 List<T> items = BuildTypedResult<T>(rdr);
 
                 if(items.Count > 0)

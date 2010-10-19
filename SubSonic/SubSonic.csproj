@@ -214,7 +214,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeGeneration\Templates\CS_ClassTemplate.aspx">
-      <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CodeGeneration\Templates\CS_SPTemplate.aspx">
       <SubType>ASPXCodeBehind</SubType>

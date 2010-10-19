@@ -273,7 +273,7 @@ ORDER BY OrdinalPosition ASC";
         /// </summary>
         /// <param name="cmd">The CMD.</param>
         /// <param name="qry">The qry.</param>
-        private static void CheckoutOutputParams(SqlCommand cmd, QueryCommand qry)
+        internal static void CheckoutOutputParams(SqlCommand cmd, QueryCommand qry)
         {
             if(qry.CommandType == CommandType.StoredProcedure && qry.HasOutputParams())
             {
@@ -349,15 +349,22 @@ ORDER BY OrdinalPosition ASC";
             return String.Empty;
         }
 
+        public override IDataReader GetReader(QueryCommand qry)
+        {
+            SqlCommand cmd;
+
+            return GetReader(qry, out cmd);
+        }
+
         /// <summary>
         /// Gets the reader.
         /// </summary>
         /// <param name="qry">The qry.</param>
         /// <returns></returns>
-        public override IDataReader GetReader(QueryCommand qry)
+        public override IDataReader GetReader(QueryCommand qry, out SqlCommand cmd)
         {
             AutomaticConnectionScope automaticConnectionScope = new AutomaticConnectionScope(this);
-            SqlCommand cmd = new SqlCommand(qry.CommandSql)
+            cmd = new SqlCommand(qry.CommandSql)
                                  {
                                      CommandType = qry.CommandType, 
                                      CommandTimeout = qry.CommandTimeout

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
 using SubSonic.Utilities;
+using System.Data.SqlClient;
 
 namespace SubSonic
 {
@@ -316,11 +317,13 @@ namespace SubSonic
         public List<T> ExecuteTypedList<T>() where T : new()
         {
             List<T> result;
-            using(IDataReader rdr = DataService.GetReader(Command))
+            SqlCommand cmd;
+            using(IDataReader rdr = DataService.GetReader(Command, out cmd))
             {
                 result = SqlQuery.BuildTypedResult<T>(rdr);
                 rdr.Close();
             }
+            SqlDataProvider.CheckoutOutputParams(cmd, Command);
             OutputValues = Command.OutputValues;
             return result;
         }

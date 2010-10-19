@@ -22,6 +22,8 @@ using System.Data.Common;
 using System.Text;
 using System.Web.Configuration;
 using SubSonic.Utilities;
+using System.Data.SqlClient;
+using System.Runtime.Remoting.Messaging;
 
 namespace SubSonic
 {
@@ -89,9 +91,9 @@ namespace SubSonic
                 if(defaultProvider == null)
                     LoadProviders();
 
-                return defaultProvider;
+                return CallContext.GetData("SubSonic.DataProvider") as DataProvider ?? defaultProvider;
             }
-            set { defaultProvider = value; }
+            set { CallContext.SetData("SubSonic.DataProvider", value); }
         }
 
         /// <summary>
@@ -511,6 +513,11 @@ namespace SubSonic
         public static IDataReader GetReader(QueryCommand cmd)
         {
             return GetInstance(cmd.ProviderName).GetReader(cmd);
+        }
+
+        public static IDataReader GetReader(QueryCommand qry, out SqlCommand cmd)
+        {
+            return GetInstance(qry.ProviderName).GetReader(qry, out cmd);
         }
 
         /// <summary>

@@ -22,6 +22,7 @@ using System.Data.Common;
 using System.Text;
 using System.Web.Configuration;
 using SubSonic.Utilities;
+using System.Data.SqlClient;
 
 namespace SubSonic
 {
@@ -723,6 +724,13 @@ namespace SubSonic
         /// <param name="cmd">The CMD.</param>
         /// <returns></returns>
         public abstract IDataReader GetReader(QueryCommand cmd);
+
+        /// <summary>
+        /// Gets the reader.
+        /// </summary>
+        /// <param name="cmd">The CMD.</param>
+        /// <returns></returns>
+        public virtual IDataReader GetReader(QueryCommand qry, out SqlCommand cmd) { throw new NotImplementedException(); }
 
         /// <summary>
         /// Gets the single record reader.
